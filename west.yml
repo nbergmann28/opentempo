@@ -1,12 +1,10 @@
 manifest:
   self:
-    path: .
+    path: opentempo
 
   remotes:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
-    - name: nbergmann28
-      url-base: https://github.com/nbergmann28
 
   projects:
     - name: zephyr
@@ -17,8 +15,4 @@ manifest:
           - cmsis_6
           - hal_espressif
           - lvgl
-  
-    - name: opentempo
-      repo-path: opentempo
-      revision: main
-      remote: nbergmann28
+          - hal_espressif
