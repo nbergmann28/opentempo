@@ -33,6 +33,10 @@
     };
 };
 
+&dma {
+    status = "okay";
+};
+
 &pinctrl {
     spi2_custom: spi2_custom {
         group1 {
@@ -51,4 +55,6 @@
     status = "okay";
     pinctrl-0 = <&spi2_custom>;
     pinctrl-names = "default";
+    dmas = <&dma 0>, <&dma 1>;
+    dma-names = "tx", "rx";
 };

@@ -26,6 +26,7 @@ int main(void)
     lv_label_set_text(label, "Hello, Zephyr!");
 
     lv_obj_set_style_text_color(label, lv_color_white(), LV_PART_MAIN);
+    lv_obj_set_style_text_font(label, &lv_font_montserrat_24, LV_PART_MAIN);
     
     lv_obj_center(label);
 
@@ -36,7 +37,7 @@ int main(void)
     }
 
     printk("LVGL initialized and label created on Core %d\n", arch_curr_cpu()->id);
-    
+
     /* Main continues on Core 0 handling background logic/BLE/Wi-Fi */
     while (1) {
         lv_timer_handler(); // Handle LVGL tasks
