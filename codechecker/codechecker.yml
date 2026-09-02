@@ -1,0 +1,4 @@
+analyzer:
+  - --analyzers=clang-tidy
+  - --analyzer-config=clang-tidy:take-config-from-directory=true
+  - --no-missing-checker-error

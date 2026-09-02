@@ -110,3 +110,5 @@ ZephyrModuleFile.txt
 
 # Node dependecies
 node_modules
+
+.vscode/settings.*

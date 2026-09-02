@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.20.0)
 
+set(CODECHECKER_ANALYZE_OPTS
+    "--config;${CMAKE_SOURCE_DIR}/codechecker/codechecker.yml;"
+    "--skip;${CMAKE_SOURCE_DIR}/codechecker/skip.codechecker"
+    CACHE STRING "Code checker options")
+
 # Find and load the Zephyr build system package
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
