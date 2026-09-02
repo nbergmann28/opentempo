@@ -1,0 +1,13 @@
+---
+CompileFlags:
+  # Points clangd to your local application build directory
+  CompilationDatabase: "build"
+  
+  # Removes GNU/GCC flags that the LLVM-based clangd parser rejects
+  Remove: 
+    - -mfp16-format=ieee
+    - -fno-reorder-functions
+    - -mno-unaligned-access
+    - -fno-tree-loop-distribute-patterns
+    - -mlongcalls
+    - -fstrict-volatile-bitfields
