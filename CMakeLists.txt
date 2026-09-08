@@ -12,5 +12,10 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(open_tempo)
 
 # Target the application source code files
-# Note: Zephyr handles compiler flags for C++ automatically when using .cpp extensions
-target_sources(app PRIVATE src/main.cpp)
+target_sources(app PRIVATE
+    src/main.cpp
+    src/GuiClock.cpp
+
+    # Generated
+    src/Gui/Generated/lv_font_roboto_mono_30.c
+)
