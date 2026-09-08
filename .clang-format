@@ -4,7 +4,9 @@ BasedOnStyle: LLVM
 
 # Modern overrides
 Standard: Latest         # Automatically targets modern C++ (C++20/C++23)
-ColumnLimit: 100         
+ColumnLimit: 100
 UseTab: Never            # Strict space-based indentation
 IndentWidth: 4           # Clean 4-space indent
+BreakBeforeBraces: Allman
 AllowShortEnumsOnASingleLine: false
+NamespaceIndentation: All

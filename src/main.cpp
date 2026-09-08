@@ -1,3 +1,4 @@
+#include "GuiClock.hpp"
 
 #include <algorithm>
 #include <cstdint>
@@ -7,8 +8,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
 
-void SetBacklightBrightness(const struct pwm_dt_spec *backlight_dev, uint32_t brightness) {
-    if (!pwm_is_ready_dt(backlight_dev)) {
+void SetBacklightBrightness(const struct pwm_dt_spec *backlight_dev, uint32_t brightness)
+{
+    if (!pwm_is_ready_dt(backlight_dev))
+    {
         printk("Backlight device not ready\n");
         return;
     }
@@ -21,28 +24,32 @@ void SetBacklightBrightness(const struct pwm_dt_spec *backlight_dev, uint32_t br
     uint32_t pulse_ns = (period_ns * brightness) / 100;
 
     int ret = pwm_set_pulse_dt(backlight_dev, pulse_ns);
-    if (ret != 0) {
+    if (ret != 0)
+    {
         printk("Failed to set backlight brightness: %d\n", ret);
     }
 }
 
-int main(void) {
+int main(void)
+{
     printk("Main system initialized on Core %d\n", arch_curr_cpu()->id);
 
     const struct device *display_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
     const struct pwm_dt_spec backlight_dev = PWM_DT_SPEC_GET(DT_ALIAS(backlight_pwm));
 
-    if (!device_is_ready(display_dev)) {
+    if (!device_is_ready(display_dev))
+    {
         printk("Display device not ready\n");
         return -1;
     }
 
-    if (!pwm_is_ready_dt(&backlight_dev)) {
+    if (!pwm_is_ready_dt(&backlight_dev))
+    {
         printk("Backlight device not ready\n");
         return -1;
     }
 
-    SetBacklightBrightness(&backlight_dev, 0); // Set backlight to 0% duty cycle (off)
+    SetBacklightBrightness(&backlight_dev, 0);
 
     lv_obj_t *screen = lv_scr_act();
     lv_obj_set_style_bg_color(screen, lv_color_black(), LV_PART_MAIN);
@@ -56,19 +63,21 @@ int main(void) {
 
     lv_obj_center(label);
 
+    gui::GuiClock clock;
+
     int ret = display_blanking_off(display_dev);
-    if (ret != 0) {
+    if (ret != 0)
+    {
         printk("Failed to turn display on: %d\n", ret);
         return ret;
     }
 
     printk("LVGL initialized and label created on Core %d\n", arch_curr_cpu()->id);
-    lv_timer_handler();
     k_msleep(5);
-    SetBacklightBrightness(&backlight_dev, 100); // Set backlight to 100% duty cycle (on)
+    SetBacklightBrightness(&backlight_dev, 100);
 
-    /* Main continues on Core 0 handling background logic/BLE/Wi-Fi */
-    while (true) {
+    while (true)
+    {
         lv_timer_handler(); // Handle LVGL tasks
         k_msleep(5);
     }
