@@ -15,6 +15,9 @@ project(open_tempo)
 target_sources(app PRIVATE
     src/main.cpp
     src/GuiClock.cpp
+    src/Threads.cpp
+    
+    src/Gui/GuiThread.cpp
 
     # Generated
     src/Gui/Generated/lv_font_roboto_mono_30.c
