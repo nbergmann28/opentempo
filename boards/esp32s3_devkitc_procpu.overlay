@@ -6,6 +6,7 @@
     chosen {
         // Tells Zephyr's display sub-system (and graphics engines like LVGL) to target this screen
         zephyr,display = &ili9341_lcd;
+        zephyr,touch = &xpt2046;
     };
 
     aliases {
@@ -43,6 +44,11 @@
             pwms = <&ledc0 0 50000 PWM_POLARITY_NORMAL>;
             label = "Backlight PWM";
         };
+    };
+
+    lvgl_pointer {
+        compatible = "zephyr,lvgl-pointer-input";
+        input = <&xpt2046>;
     };
 };
 
@@ -93,4 +99,29 @@
     pinctrl-names = "default";
     dmas = <&dma 0>, <&dma 1>;
     dma-names = "tx", "rx";
+};
+
+&spi3 {
+    status = "okay";
+    pinctrl-0 = <&spim3_default>;
+    pinctrl-names = "default";
+
+	xpt2046: xpt2046@0 {
+		compatible = "xptek,xpt2046";
+		reg = <0>;
+		spi-max-frequency = <2000000>;
+
+		/* Interrupt pin (PENIRQ) - active low, pulled up (example: GPIO 9) */
+		int-gpios = <&gpio0 16 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+		/* Required screen dimensions & raw ADC calibration bounds */
+		touchscreen-size-x = <240>;
+		touchscreen-size-y = <320>;
+		min-x = <300>;
+		min-y = <300>;
+		max-x = <3900>;
+		max-y = <3900>;
+		z-threshold = <100>;
+		reads = <3>;
+	};
 };
