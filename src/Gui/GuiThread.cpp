@@ -75,13 +75,15 @@ namespace gui
         lv_obj_set_style_bg_color(screen, lv_color_black(), LV_PART_MAIN);
         lv_obj_set_style_bg_opa(screen, LV_OPA_COVER, LV_PART_MAIN);
 
+        lv_obj_t *icon = lv_image_create(screen);
+        lv_image_set_src(icon, &HappyBirthday);
+        lv_obj_center(icon);
+
         lv_obj_t *label = lv_label_create(screen);
-        lv_label_set_text(label, "Hello, Bergmann's!");
-
-        lv_obj_set_style_text_color(label, lv_color_white(), LV_PART_MAIN);
+        lv_label_set_text(label, "JEREMIA");
+        lv_obj_set_style_text_color(label, lv_color_black(), LV_PART_MAIN);
         lv_obj_set_style_text_font(label, &lv_font_montserrat_24, LV_PART_MAIN);
-
-        lv_obj_center(label);
+        lv_obj_align(label, LV_ALIGN_BOTTOM_MID, 0, -50);
 
         lv_obj_t *clockLabel = lv_label_create(screen);
         lv_label_set_text(clockLabel, "00:00:00");

@@ -8,6 +8,8 @@
 
 LV_FONT_DECLARE(lv_font_roboto_mono_30);
 
+LV_IMAGE_DECLARE(HappyBirthday);
+
 namespace gui
 {
     class GuiThread

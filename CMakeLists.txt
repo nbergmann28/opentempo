@@ -21,4 +21,5 @@ target_sources(app PRIVATE
 
     # Generated
     src/Gui/Generated/lv_font_roboto_mono_30.c
+    src/Gui/Assets/HappyBirthday.c
 )
