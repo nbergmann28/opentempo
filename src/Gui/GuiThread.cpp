@@ -1,12 +1,32 @@
 
+#include <zephyr/device.h>
 #include <zephyr/drivers/display.h>
 #include <zephyr/drivers/pwm.h>
+#include <zephyr/input/input.h>
 #include <zephyr/kernel.h>
 
 #include "GuiThread.hpp"
 
 namespace gui
 {
+    void GuiThread::TouchEventCallback(struct input_event *event, void *user_data)
+    {
+        auto *instance = static_cast<GuiThread *>(user_data);
+        instance->HandleTouchEvent(event);
+    }
+
+    void GuiThread::HandleTouchEvent(struct input_event *event)
+    {
+        if (event->type == INPUT_EV_KEY && event->code == INPUT_BTN_TOUCH)
+        {
+            printk("Touch %s\n", event->value ? "pressed" : "released");
+        }
+        else if (event->type == INPUT_EV_ABS)
+        {
+            printk("Touch %s = %d\n", event->code == INPUT_ABS_X ? "X" : "Y", event->value);
+        }
+    }
+
     void GuiThread::SetBacklightBrightness(const struct pwm_dt_spec *backlight_dev,
                                            uint32_t brightness)
     {

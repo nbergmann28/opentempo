@@ -1,4 +1,6 @@
 
+#include <zephyr/device.h>
+#include <zephyr/input/input.h>
 #include <zephyr/kernel.h>
 
 #include "Gui/GuiThread.hpp"
@@ -9,6 +11,8 @@
 void GuiThreadEntry(void * /*unused*/, void * /*unused*/, void * /*unused*/)
 {
     static gui::GuiThread guiThread;
+    INPUT_CALLBACK_DEFINE_NAMED(DEVICE_DT_GET(DT_NODELABEL(xpt2046)),
+                                gui::GuiThread::TouchEventCallback, &guiThread, touch_event);
     guiThread.GuiThreadEntry();
 }
 
